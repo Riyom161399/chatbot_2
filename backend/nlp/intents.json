@@ -1,0 +1,377 @@
+{
+  "intents": [
+    {
+      "intent": "greeting",
+      "examples": [
+        "hello",
+        "hi",
+        "hey",
+        "hlw",
+        "hlo",
+        "good morning",
+        "sup",
+        "salam",
+        "assalamu alaikum",
+        "hi there",
+        "greetings",
+        "hello bot"
+      ],
+      "response": "Hi! Welcome to CUET Assistant 👋 How can I help you today?"
+    },
+    {
+      "intent": "bot_identity",
+      "examples": [
+        "who are you",
+        "what is your name",
+        "who made you",
+        "are you a bot",
+        "intro",
+        "introduce yourself",
+        "what do you do",
+        "tell me about yourself"
+      ],
+      "response": "I am the CUET Virtual Assistant 🤖, created to help students navigate campus life! I can guide you about locations, admission, and facilities."
+    },
+    {
+      "intent": "admin_vc",
+      "examples": [
+        "who is the vc",
+        "vice chancellor name",
+        "current vc",
+        "head of university",
+        "vc sir name",
+        "name of vice chancellor",
+        "who runs cuet"
+      ],
+      "response": "👨‍🏫 The current Vice-Chancellor of CUET is **Prof. Dr. Mahmud Abdul Matin Bhuiyan**."
+    },
+    {
+      "intent": "cuet_location",
+      "examples": [
+        "where is cuet",
+        "cuet location",
+        "address",
+        "how to reach cuet",
+        "map",
+        "cuet kothay",
+        "location of campus",
+        "how far is cuet from city"
+      ],
+      "response": "📍 CUET is located in **Raozan, Chittagong**, beside the Kaptai Highway. It is approximately **25km** from Chittagong city center (Bahaddarhat)."
+    },
+    {
+      "intent": "transport_bus",
+      "examples": [
+        "bus schedule",
+        "transport",
+        "bus route",
+        "city bus",
+        "bus time",
+        "when does the bus leave",
+        "student bus",
+        "bus for students",
+        "campus bus"
+      ],
+      "response": "🚌 CUET has a dedicated bus fleet. Buses usually leave campus at **1:15 PM, 2:30 PM, and 5:30 PM**. \nNote: Schedules change during exams/holidays, so always check the notice board."
+    },
+    {
+      "intent": "transport_local",
+      "examples": [
+        "local transport",
+        "cng",
+        "how to go to city without bus",
+        "rickshaw",
+        "transport off time",
+        "kaptai road bus"
+      ],
+      "response": "🛺 If you miss the university bus, you can take a **CNG** or local bus (like 'Paharika' or 'Drutojan') from the CUET Main Gate to Bahaddarhat or Kaptai Raster Matha."
+    },
+    {
+      "intent": "facilities_medical",
+      "examples": [
+        "medical center",
+        "doctor",
+        "hospital",
+        "ambulance",
+        "sick",
+        "emergency",
+        "health center",
+        "medical facilities"
+      ],
+      "response": "🏥 The **CUET Medical Center** is open **24/7** for emergencies. It provides free basic treatment, medicine, and has an ambulance service for referrals to city hospitals."
+    },
+    {
+      "intent": "facilities_incubator",
+      "examples": [
+        "incubator",
+        "it park",
+        "business incubator",
+        "sheikh kamal it incubator",
+        "startup facilities",
+        "hitech park"
+      ],
+      "response": "🚀 **Sheikh Kamal IT Business Incubator** at CUET is the first campus-based incubator in Bangladesh! It supports startups, innovation, and provides office space for tech companies."
+    },
+    {
+      "intent": "academic_calendar",
+      "examples": [
+        "weekend",
+        "holiday",
+        "when is university closed",
+        "class days",
+        "weekly holiday",
+        "is friday off"
+      ],
+      "response": "🗓️ The weekly holidays are usually **Thursday and Friday**. Administrative offices are open Sunday to Wednesday (9 AM - 5 PM)."
+    },
+    {
+      "intent": "dept_cse",
+      "examples": [
+        "cse department",
+        "computer science",
+        "what is cse",
+        "cse labs",
+        "about cse dept",
+        "computer engineering"
+      ],
+      "response": "💻 **CSE (Computer Science & Engineering)** is a top-tier department known for its programming culture. It has advanced labs for AI, Robotics, and Networking."
+    },
+    {
+      "intent": "dept_me",
+      "examples": [
+        "me department",
+        "mechanical engineering",
+        "mechanical dept",
+        "me labs",
+        "about mechanical",
+        "machinery"
+      ],
+      "response": "⚙️ **Mechanical Engineering (ME)** is a core engineering branch at CUET with state-of-the-art labs for Thermodynamics, Fluid Mechanics, and Heat Engine research."
+    },
+    {
+      "intent": "dept_arch",
+      "examples": [
+        "architecture department",
+        "arch dept",
+        "about architecture",
+        "design department",
+        "b.arch"
+      ],
+      "response": "🏛️ The **Department of Architecture** (est. 2009) focuses on sustainable design and urban planning. Students here participate in rigorous design studios and jury presentations."
+    },
+    {
+      "intent": "admission_info",
+      "examples": [
+        "admission process",
+        "how to apply",
+        "exam date",
+        "seat plan",
+        "requirements",
+        "total seats",
+        "admission circular"
+      ],
+      "response": "🎓 Admission is via the **Cluster System (CKRuET)**. There are approximately **920+ seats** available across all departments. Check the official website for the latest circular."
+    },
+    {
+      "intent": "grading_system",
+      "examples": [
+        "grading system",
+        "cgpa",
+        "gpa calculation",
+        "pass marks",
+        "fail",
+        "what is a minus",
+        "grading scale"
+      ],
+      "response": "📊 CUET follows a 4.00 scale:\n**A+ (4.00)**: 80%+\n**A (3.75)**: 75-79%\n**A- (3.50)**: 70-74%\n**B+ (3.25)**: 65-69%\n**Pass (D)**: 40%"
+    },
+    {
+      "intent": "campus_spots",
+      "examples": [
+        "famous spots",
+        "where to hang out",
+        "gol chattar",
+        "shantir dip",
+        "places to visit",
+        "central field",
+        "sightseeing"
+      ],
+      "response": "🌳 Popular hangout spots include:\n1. **Gol Chattar** (The main roundabout)\n2. **Shantir Dip** (Peace Island)\n3. **Central Field**\n4. **Joy Bangla Sculpture**"
+    },
+    {
+      "intent": "market_shopping",
+      "examples": [
+        "market",
+        "where to buy food",
+        "shopping",
+        "pahartali",
+        "grocery",
+        "daily needs",
+        "bazaar"
+      ],
+      "response": "🛒 For daily needs, students go to **Pahartali** (just outside the main gate). For bigger shopping, students travel to **Kaptai Raster Matha** or the city."
+    },
+    {
+      "intent": "halls_general",
+      "examples": [
+        "halls",
+        "hostel",
+        "accommodation",
+        "where to stay",
+        "list of halls",
+        "student residence"
+      ],
+      "response": "🏠 CUET has 5 male halls (Bangabandhu, Shaheed Smriti, QK, TBH, Ahsanullah) and 1 female hall (Sufia Kamal). Halls are allotted based on merit and distance."
+    },
+    {
+      "intent": "hall_dining",
+      "examples": [
+        "hall food",
+        "dining",
+        "mess",
+        "food menu",
+        "lunch time",
+        "dinner time",
+        "what do we eat"
+      ],
+      "response": "🍚 Hall dining operates on a token system.\n**Lunch:** 1:00 PM - 2:30 PM\n**Dinner:** 8:00 PM - 9:30 PM.\nTokens must be bought in the morning."
+    },
+    {
+      "intent": "ragging_policy",
+      "examples": [
+        "ragging",
+        "rag day",
+        "junior senior",
+        "bullying",
+        "is ragging allowed",
+        "safety",
+        "complaint"
+      ],
+      "response": "🚫 **Zero Tolerance:** Ragging is strictly prohibited at CUET. If you face any harassment, report immediately to the **Proctorial Body** or Student Welfare Director."
+    },
+    {
+      "intent": "student_clubs",
+      "examples": [
+        "clubs",
+        "organizations",
+        "join club",
+        "robotics club",
+        "debating club",
+        "green for peace",
+        "extra curricular"
+      ],
+      "response": "🚀 Vibrant clubs at CUET:\n- **Robotics Club**\n- **Debating Society**\n- **Computer Club**\n- **Photography Society**\n- **Green for Peace**\n- **Joydhoni** (Cultural)"
+    },
+    {
+      "intent": "cse_head",
+      "examples": [
+        "head of cse",
+        "cse department head",
+        "chairman of cse",
+        "who is cse head",
+        "cse head sir name"
+      ],
+      "response": "👨‍🏫 The current Head of the Department of CSE is **Prof. Dr. Pranab Kumar Dhar**. You can find him in the CSE office on the 2nd floor of the Academic Building."
+    },
+    {
+      "intent": "cse_faculty",
+      "examples": [
+        "cse teachers",
+        "faculty members of cse",
+        "cse teacher list",
+        "how many teachers in cse",
+        "professors in cse"
+      ],
+      "response": "👨‍🏫 The CSE department has a distinguished faculty team including **Prof. Dr. Kaushik Deb, Prof. Dr. Md. Ibrahim Khan, and Prof. Dr. Asaduzzaman**. There are over 35+ faculty members specializing in AI, Data Science, and Systems."
+    },
+    {
+      "intent": "cse_labs",
+      "examples": [
+        "cse labs",
+        "labs in cse",
+        "computer labs",
+        "facilities in cse",
+        "what labs are there in cse"
+      ],
+      "response": "🖥️ CSE boasts state-of-the-art laboratories:\n1. **Mobile Games & Apps Dev Lab**\n2. **Robotics & Mechatronics Lab**\n3. **Network & Hardware Lab**\n4. **Artificial Intelligence Lab**\n5. **Software Engineering Lab**\n6. **Operating Systems Lab**"
+    },
+    {
+      "intent": "cse_syllabus",
+      "examples": [
+        "cse syllabus",
+        "cse courses",
+        "what do we study in cse",
+        "credit hours cse",
+        "course curriculum"
+      ],
+      "response": "📚 The CSE curriculum covers 160+ credits over 4 years. Key courses include:\n- **Structured & Object Oriented Programming**\n- **Data Structures & Algorithms**\n- **Discrete Math**\n- **Database Systems**\n- **Artificial Intelligence**\n- **Compiler Design**"
+    },
+    {
+      "intent": "cse_research",
+      "examples": [
+        "cse research",
+        "research areas cse",
+        "thesis topics cse",
+        "publications",
+        "research fields"
+      ],
+      "response": "🔬 Major research areas in CUET CSE include:\n- **Computer Vision & Image Processing**\n- **Natural Language Processing (NLP)**\n- **Bioinformatics**\n- **Cyber Security**\n- **Internet of Things (IoT)**"
+    },
+    {
+      "intent": "cse_achievements",
+      "examples": [
+        "cse achievements",
+        "icpc ranking",
+        "contest results",
+        "awards",
+        "hackathon",
+        "nasa space apps"
+      ],
+      "response": "🏆 **Pride of CUET:**\n- Regular **ICPC World Finals** qualifiers.\n- Champions in **NASA Space Apps Challenge** (multiple years).\n- Top rankings in **NCPC** and **Inter-University Hackathons**."
+    },
+    {
+      "intent": "cse_clubs_specific",
+      "examples": [
+        "cse clubs",
+        "computer club",
+        "acm student chapter",
+        "ieee cs chapter",
+        "activities in cse"
+      ],
+      "response": "🚀 **CSE Student Activities:**\n- **CUET Computer Club (CCC):** Organizes workshops and fests.\n- **ACCE:** The association of CSE students.\n- **IEEE CS Student Branch:** For research and seminars."
+    },
+    {
+      "intent": "cse_fest",
+      "examples": [
+        "cse fest",
+        "tech fest cse",
+        "programmers week",
+        "hackathon date",
+        "cultural night cse"
+      ],
+      "response": "🎉 The department organizes a grand **CSE Fest** annually! It features:\n- **CodeStorm** (Programming Contest)\n- **Robo-Soccer**\n- **Project Showcasing**\n- **Gaming Contest** (FIFA/Valorant)\n- **Cultural Night**"
+    },
+    {
+      "intent": "cse_alumni",
+      "examples": [
+        "cse alumni",
+        "job sectors",
+        "where do cse graduates work",
+        "career after cse",
+        "google microsoft cuet"
+      ],
+      "response": "💼 CUET CSE graduates are working globally at **Google, Amazon, Microsoft, Agoda**, and top local firms like **Therap, BJIT, and Enosis**. Many are also pursuing PhDs in USA/Canada."
+    },
+    {
+      "intent": "cse_contact",
+      "examples": [
+        "cse office",
+        "contact cse",
+        "cse department location",
+        "cse phone number",
+        "email of cse head"
+      ],
+      "response": "📍 **CSE Department Office:**\n- **Location:** 2nd Floor, New Academic Building (Block B).\n- **Email:** headcse@cuet.ac.bd\n- **Website:** cuet.ac.bd/department/cse"
+    }
+  ]
+}
