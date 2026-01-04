@@ -1,11 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { FaUserCircle, FaRobot, FaPaperPlane } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaRobot,
+  FaPaperPlane,
+  FaSun,
+  FaMoon,
+} from "react-icons/fa";
 
 function Bot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Default to Dark Mode (true)
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
   const messagesEndRef = useRef(null);
 
   // Auto-scroll to bottom
@@ -54,11 +64,25 @@ function Bot() {
     if (e.key === "Enter") handleSendMessage();
   };
 
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+
   return (
-    // Background: Deep "Volcanic" Gradient (Red/Maroon to Black)
-    <div className="flex flex-col min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-900 via-neutral-900 to-black text-gray-100 font-sans">
-      {/* Navbar: Glassmorphism */}
-      <header className="fixed top-0 left-0 w-full backdrop-blur-lg bg-black/40 border-b border-white/10 z-20 shadow-lg">
+    // Dynamic Background based on isDarkMode
+    <div
+      className={`flex flex-col min-h-screen font-sans transition-colors duration-500 ${
+        isDarkMode
+          ? "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-900 via-neutral-900 to-black text-gray-100"
+          : "bg-gradient-to-br from-red-50 via-slate-50 to-white text-gray-800"
+      }`}
+    >
+      {/* Navbar */}
+      <header
+        className={`fixed top-0 left-0 w-full backdrop-blur-lg border-b z-20 shadow-lg transition-colors duration-500 ${
+          isDarkMode
+            ? "bg-black/40 border-white/10"
+            : "bg-white/70 border-gray-200"
+        }`}
+      >
         <div className="container mx-auto flex justify-between items-center px-6 py-4">
           <div className="flex items-center gap-3">
             {/* Robot Icon Background */}
@@ -66,17 +90,37 @@ function Bot() {
               <FaRobot size={24} className="text-white" />
             </div>
             <h1 className="text-2xl font-bold tracking-wide">
-              {/* Text Gradient: Yellow to Red */}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
                 CUET
               </span>
-              <span className="text-gray-300">_BOT</span>
+              <span className={isDarkMode ? "text-gray-300" : "text-gray-600"}>
+                _BOT
+              </span>
             </h1>
           </div>
-          <FaUserCircle
-            size={32}
-            className="text-gray-400 hover:text-yellow-400 transition-colors cursor-pointer"
-          />
+
+          <div className="flex items-center gap-4">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-full transition-all duration-300 ${
+                isDarkMode
+                  ? "bg-gray-800 text-yellow-400 hover:bg-gray-700"
+                  : "bg-gray-100 text-orange-600 hover:bg-gray-200"
+              }`}
+            >
+              {isDarkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+            </button>
+
+            <FaUserCircle
+              size={32}
+              className={`transition-colors cursor-pointer ${
+                isDarkMode
+                  ? "text-gray-400 hover:text-yellow-400"
+                  : "text-gray-400 hover:text-orange-500"
+              }`}
+            />
+          </div>
         </div>
       </header>
 
@@ -86,16 +130,23 @@ function Bot() {
           {/* Empty State / Welcome */}
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-fade-in-up">
-              {/* Floating Icon */}
               <div className="w-24 h-24 bg-gradient-to-tr from-red-600 to-orange-500 rounded-full flex items-center justify-center shadow-2xl shadow-orange-500/30 mb-6 animate-bounce-slow">
                 <FaRobot size={40} className="text-white" />
               </div>
-              <h2 className="text-4xl font-extrabold text-white mb-2">
+              <h2
+                className={`text-4xl font-extrabold mb-2 ${
+                  isDarkMode ? "text-white" : "text-gray-800"
+                }`}
+              >
                 Hello, Student! 👋
               </h2>
-              <p className="text-lg text-gray-400 max-w-md">
+              <p
+                className={`text-lg max-w-md ${
+                  isDarkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
                 I am your{" "}
-                <span className="text-yellow-400 font-semibold">
+                <span className="text-yellow-500 font-semibold">
                   CUET Assistant
                 </span>
                 . Ask me about exams, syllabus, transport, or facilities.
@@ -114,10 +165,14 @@ function Bot() {
               <div
                 className={`relative px-6 py-3 rounded-2xl max-w-[80%] text-base shadow-md leading-relaxed ${
                   msg.sender === "user"
-                    ? "bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-tr-sm" // User: Orange/Red Gradient
+                    ? "bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-tr-sm" // User always gets gradient
                     : msg.isError
-                    ? "bg-red-950/80 border border-red-500/50 text-red-200 rounded-tl-sm"
-                    : "bg-gray-800/60 backdrop-blur-sm border border-white/10 text-gray-100 rounded-tl-sm" // Bot: Glass
+                    ? isDarkMode
+                      ? "bg-red-950/80 border border-red-500/50 text-red-200"
+                      : "bg-red-50 border border-red-200 text-red-600"
+                    : isDarkMode // Bot Message Logic
+                    ? "bg-gray-800/60 backdrop-blur-sm border border-white/10 text-gray-100 rounded-tl-sm"
+                    : "bg-white border border-gray-200 text-gray-800 rounded-tl-sm shadow-sm"
                 }`}
               >
                 {msg.text}
@@ -128,7 +183,13 @@ function Bot() {
           {/* Loading Indicator */}
           {loading && (
             <div className="flex justify-start w-full">
-              <div className="bg-gray-800/60 backdrop-blur-sm border border-white/10 px-6 py-4 rounded-2xl rounded-tl-sm flex items-center space-x-2">
+              <div
+                className={`px-6 py-4 rounded-2xl rounded-tl-sm flex items-center space-x-2 border backdrop-blur-sm ${
+                  isDarkMode
+                    ? "bg-gray-800/60 border-white/10"
+                    : "bg-white border-gray-200 shadow-sm"
+                }`}
+              >
                 <div
                   className="w-2 h-2 bg-yellow-500 rounded-full animate-bounce"
                   style={{ animationDelay: "0s" }}
@@ -152,11 +213,20 @@ function Bot() {
       {/* Input Bar */}
       <footer className="fixed bottom-0 left-0 w-full z-20 px-4 pb-6 pt-2">
         <div className="max-w-3xl mx-auto">
-          {/* Input Container */}
-          <div className="relative flex items-center bg-gray-900/80 backdrop-blur-xl rounded-full border border-white/10 shadow-2xl shadow-orange-900/20 focus-within:ring-2 focus-within:ring-orange-500/50 transition-all duration-300">
+          <div
+            className={`relative flex items-center backdrop-blur-xl rounded-full border shadow-2xl transition-all duration-300 ${
+              isDarkMode
+                ? "bg-gray-900/80 border-white/10 shadow-orange-900/20"
+                : "bg-white/80 border-gray-200 shadow-gray-200/50"
+            }`}
+          >
             <input
               type="text"
-              className="flex-1 bg-transparent text-white placeholder-gray-500 px-6 py-4 outline-none rounded-full text-lg"
+              className={`flex-1 bg-transparent px-6 py-4 outline-none rounded-full text-lg ${
+                isDarkMode
+                  ? "text-white placeholder-gray-500"
+                  : "text-gray-800 placeholder-gray-400"
+              }`}
               placeholder="Ask about CUET..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -169,8 +239,10 @@ function Bot() {
               disabled={!input.trim() || loading}
               className={`mr-2 p-3 rounded-full transition-all duration-300 flex items-center justify-center ${
                 input.trim() && !loading
-                  ? "bg-gradient-to-r from-yellow-500 to-red-600 text-white shadow-lg hover:scale-110 hover:shadow-orange-500/40"
-                  : "bg-gray-700 text-gray-500 cursor-not-allowed"
+                  ? "bg-gradient-to-r from-yellow-500 to-red-600 text-white shadow-lg hover:scale-110"
+                  : isDarkMode
+                  ? "bg-gray-700 text-gray-500 cursor-not-allowed"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
               }`}
             >
               <FaPaperPlane
@@ -181,7 +253,11 @@ function Bot() {
           </div>
 
           <div className="text-center mt-2">
-            <span className="text-xs text-gray-500">
+            <span
+              className={`text-xs ${
+                isDarkMode ? "text-gray-500" : "text-gray-400"
+              }`}
+            >
               Powered by CUET AI Dept
             </span>
           </div>
