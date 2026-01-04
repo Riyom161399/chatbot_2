@@ -6,30 +6,59 @@ import {
   FaPaperPlane,
   FaSun,
   FaMoon,
+  FaLightbulb,
 } from "react-icons/fa";
 
 function Bot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Default to Dark Mode (true)
   const [isDarkMode, setIsDarkMode] = useState(true);
+
+  // 1. The list of 10 Questions
+  const allQuestions = [
+    "What is the syllabus for the admission test?",
+    "How can I apply for the student bus pass?",
+    "Where is the central library located?",
+    "What are the hostel facilities like?",
+    "Is there a medical center on campus?",
+    "What is the grading system at CUET?",
+    "How do I access the university Wi-Fi?",
+    "When does the next semester start?",
+    "Are there any scholarship opportunities?",
+    "What is the schedule for the university bus?",
+  ];
+
+  // 2. State to store the SINGLE current suggestion
+  const [suggestion, setSuggestion] = useState("");
 
   const messagesEndRef = useRef(null);
 
-  // Auto-scroll to bottom
+  // Helper: Get a random question
+  const shuffleSuggestion = () => {
+    const randomIndex = Math.floor(Math.random() * allQuestions.length);
+    setSuggestion(allQuestions[randomIndex]);
+  };
+
+  // Initial Shuffle on Mount
+  useEffect(() => {
+    shuffleSuggestion();
+  }, []);
+
+  // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  const handleSendMessage = async () => {
-    if (!input.trim()) return;
+  const handleSendMessage = async (msgText = input) => {
+    if (!msgText.trim()) return;
 
-    const userMessage = input;
-    setInput(""); // Clear input immediately
+    const userMessage = msgText;
+    setInput("");
 
-    // 1. Add User message immediately (Optimistic UI)
+    // 3. Shuffle the question immediately after sending
+    shuffleSuggestion();
+
     setMessages((prev) => [...prev, { text: userMessage, sender: "user" }]);
     setLoading(true);
 
@@ -39,7 +68,6 @@ function Bot() {
       });
 
       if (res.status === 200) {
-        // 2. Add Bot message when it arrives
         setMessages((prev) => [
           ...prev,
           { text: res.data.botMessage, sender: "bot" },
@@ -67,7 +95,6 @@ function Bot() {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   return (
-    // Dynamic Background based on isDarkMode
     <div
       className={`flex flex-col min-h-screen font-sans transition-colors duration-500 ${
         isDarkMode
@@ -85,7 +112,6 @@ function Bot() {
       >
         <div className="container mx-auto flex justify-between items-center px-6 py-4">
           <div className="flex items-center gap-3">
-            {/* Robot Icon Background */}
             <div className="bg-gradient-to-tr from-yellow-500 to-red-600 p-2 rounded-lg shadow-lg shadow-orange-500/20">
               <FaRobot size={24} className="text-white" />
             </div>
@@ -98,9 +124,7 @@ function Bot() {
               </span>
             </h1>
           </div>
-
           <div className="flex items-center gap-4">
-            {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
               className={`p-2 rounded-full transition-all duration-300 ${
@@ -111,7 +135,6 @@ function Bot() {
             >
               {isDarkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
             </button>
-
             <FaUserCircle
               size={32}
               className={`transition-colors cursor-pointer ${
@@ -125,11 +148,11 @@ function Bot() {
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 overflow-y-auto pt-28 pb-32 px-4">
+      <main className="flex-1 overflow-y-auto pt-28 pb-40 px-4">
         <div className="w-full max-w-3xl mx-auto flex flex-col space-y-6">
-          {/* Empty State / Welcome */}
+          {/* Welcome Message */}
           {messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-fade-in-up">
+            <div className="flex flex-col items-center justify-center h-[50vh] text-center animate-fade-in-up">
               <div className="w-24 h-24 bg-gradient-to-tr from-red-600 to-orange-500 rounded-full flex items-center justify-center shadow-2xl shadow-orange-500/30 mb-6 animate-bounce-slow">
                 <FaRobot size={40} className="text-white" />
               </div>
@@ -149,12 +172,11 @@ function Bot() {
                 <span className="text-yellow-500 font-semibold">
                   CUET Assistant
                 </span>
-                . Ask me about exams, syllabus, transport, or facilities.
+                .
               </p>
             </div>
           )}
 
-          {/* Messages */}
           {messages.map((msg, idx) => (
             <div
               key={idx}
@@ -165,12 +187,12 @@ function Bot() {
               <div
                 className={`relative px-6 py-3 rounded-2xl max-w-[80%] text-base shadow-md leading-relaxed ${
                   msg.sender === "user"
-                    ? "bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-tr-sm" // User always gets gradient
+                    ? "bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-tr-sm"
                     : msg.isError
                     ? isDarkMode
                       ? "bg-red-950/80 border border-red-500/50 text-red-200"
                       : "bg-red-50 border border-red-200 text-red-600"
-                    : isDarkMode // Bot Message Logic
+                    : isDarkMode
                     ? "bg-gray-800/60 backdrop-blur-sm border border-white/10 text-gray-100 rounded-tl-sm"
                     : "bg-white border border-gray-200 text-gray-800 rounded-tl-sm shadow-sm"
                 }`}
@@ -180,7 +202,6 @@ function Bot() {
             </div>
           ))}
 
-          {/* Loading Indicator */}
           {loading && (
             <div className="flex justify-start w-full">
               <div
@@ -205,14 +226,33 @@ function Bot() {
               </div>
             </div>
           )}
-
           <div ref={messagesEndRef} />
         </div>
       </main>
 
       {/* Input Bar */}
       <footer className="fixed bottom-0 left-0 w-full z-20 px-4 pb-6 pt-2">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto flex flex-col gap-3">
+          {/* 4. Suggestion Chip (Shows only if not loading) */}
+          {!loading && suggestion && (
+            <div className="flex justify-center animate-fade-in-up">
+              <button
+                onClick={() => handleSendMessage(suggestion)}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 shadow-lg hover:scale-105 ${
+                  isDarkMode
+                    ? "bg-gray-800/80 hover:bg-gray-700 text-yellow-400 border border-yellow-500/30"
+                    : "bg-white hover:bg-gray-50 text-orange-600 border border-orange-200"
+                }`}
+              >
+                <FaLightbulb
+                  className={isDarkMode ? "text-yellow-400" : "text-orange-500"}
+                />
+                {suggestion}
+              </button>
+            </div>
+          )}
+
+          {/* Input Field */}
           <div
             className={`relative flex items-center backdrop-blur-xl rounded-full border shadow-2xl transition-all duration-300 ${
               isDarkMode
@@ -235,7 +275,7 @@ function Bot() {
             />
 
             <button
-              onClick={handleSendMessage}
+              onClick={() => handleSendMessage(input)}
               disabled={!input.trim() || loading}
               className={`mr-2 p-3 rounded-full transition-all duration-300 flex items-center justify-center ${
                 input.trim() && !loading
@@ -252,7 +292,7 @@ function Bot() {
             </button>
           </div>
 
-          <div className="text-center mt-2">
+          <div className="text-center">
             <span
               className={`text-xs ${
                 isDarkMode ? "text-gray-500" : "text-gray-400"
