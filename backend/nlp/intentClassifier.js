@@ -1,6 +1,6 @@
+// intentClassifier.js
 import { preprocess } from "./preprocess.js";
-import { trainVectorizer } from "./vectorizer.js";
-import stringSimilarity from "string-similarity";
+import { trainVectorizer, vectorize, cosineSimilarity } from "./vectorizer.js";
 
 /**
  * Initialize NLP system (run once when server starts)
@@ -10,32 +10,38 @@ export function initNLP(intents) {
 }
 
 /**
- * Classify user intent
+ * Classify user intent using TF-IDF + cosine similarity
  */
 export function classifyIntent(text, intents) {
   const cleanText = preprocess(text);
+  const inputVector = vectorize(cleanText);
 
-  const allExamples = intents.flatMap((intent) => intent.examples);
+  let bestScore = 0;
+  let bestIntent = null;
 
-  const result = stringSimilarity.findBestMatch(cleanText, allExamples);
-  const confidence = result.bestMatch.rating;
-  const matchedSentence = result.bestMatch.target;
+  intents.forEach((intent) => {
+    intent.examples.forEach((example) => {
+      const exampleVector = vectorize(example);
+      const score = cosineSimilarity(inputVector, exampleVector);
 
-  if (confidence < 0.5) {
+      if (score > bestScore) {
+        bestScore = score;
+        bestIntent = intent;
+      }
+    });
+  });
+
+  if (bestScore < 0.35) {
     return {
       intent: null,
       response: "I'm not sure about that 🤔",
-      confidence,
+      confidence: bestScore,
     };
   }
 
-  const matchedIntent = intents.find((intent) =>
-    intent.examples.includes(matchedSentence)
-  );
-
   return {
-    intent: matchedIntent.intent,
-    response: matchedIntent.response,
-    confidence,
+    intent: bestIntent.intent,
+    response: bestIntent.response,
+    confidence: bestScore,
   };
 }
